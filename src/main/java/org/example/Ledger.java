@@ -16,20 +16,38 @@ public class Ledger {
                 """);
         String input = scanner.nextLine();
         switch(input.toUpperCase()){
-            case "D":
+            case "A":
                 showEntries();
                 break;
-            case "P":
+            case "D":
                 showDeposits();
                 break;
-            case "L":
-                showLedger();
+            case "P":
+                showPayments();
                 break;
-            case "X":
-                System.exit(0);
+            case "R":
+                reportsMenu();
+            case "H":
+                Main.homescreen();
             default:
                 System.out.println("Please enter a valid option");
                 break;
         }
+    }
+
+    public static void showEntries() {
+
+    }
+
+    public static void showDeposits() {
+
+    }
+
+    public static void showPayments() {
+
+    }
+
+    public static void reportsMenu() {
+
     }
 }

@@ -12,7 +12,7 @@ public class Main {
     public static void homescreen() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("""
-                Welcome to your Account Ledger!
+                Welcome to your Finance Account!
                 Main Menu:
                 [D] - Add Deposit
                 [P] - Make Payment
