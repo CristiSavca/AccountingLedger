@@ -1,15 +1,14 @@
 package org.example;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Ledger {
+    public static Scanner scanner = new Scanner(System.in);
     public static ArrayList<Transaction> transactions = getTransactions();
     public static ArrayList<Transaction> getTransactions(){
         ArrayList<Transaction> transactions = new ArrayList<>();
@@ -38,8 +37,7 @@ public class Ledger {
     }
 
 
-    public static void showLedger() {
-        Scanner scanner = new Scanner(System.in);
+    public static void ledgerMenu() {
         System.out.println("""
                 Welcome to your Account Ledger!
                 Main Menu:
@@ -47,26 +45,15 @@ public class Ledger {
                 [D] - Deposits
                 [P] - Payments
                 [R] - Reports
-                [H] - Home
-                """);
+                [H] - Home""");
         String input = scanner.nextLine();
         switch(input.toUpperCase()){
-            case "A":
-                showEntries();
-                break;
-            case "D":
-                showDeposits();
-                break;
-            case "P":
-                showPayments();
-                break;
-            case "R":
-                reportsMenu();
-            case "H":
-                Main.homescreen();
-            default:
-                System.out.println("Please enter a valid option");
-                break;
+            case "A" -> showEntries();
+            case "D" -> showDeposits();
+            case "P" -> showPayments();
+            case "R" -> reportsMenu();
+            case "H" -> Main.homeScreen();
+            default -> System.out.println("Please enter a valid option");
         }
     }
 
@@ -81,14 +68,57 @@ public class Ledger {
                     item.getAmount()
             );
         }
+        System.out.println("[X] - Exit");
+        String input = scanner.nextLine();
+        if (input.equalsIgnoreCase("X")) {
+            ledgerMenu();
+        } else {
+            ledgerMenu();
+        }
     }
 
     public static void showDeposits() {
-
+        System.out.println("All Deposits:");
+        for (Transaction item : transactions){
+            if (item.getAmount() > 0) {
+                System.out.println(
+                        item.getDate() + " " +
+                                item.getTime() + " " +
+                                item.getDescription() + " " +
+                                item.getVendor() + " " +
+                                item.getAmount()
+                );
+            }
+        }
+        System.out.println("[X] - Exit");
+        String input = scanner.nextLine();
+        if (input.equalsIgnoreCase("X")) {
+            ledgerMenu();
+        } else {
+            ledgerMenu();
+        }
     }
 
     public static void showPayments() {
-
+        System.out.println("All Payments:");
+        for (Transaction item : transactions){
+            if (item.getAmount() < 0) {
+                System.out.println(
+                        item.getDate() + " " +
+                                item.getTime() + " " +
+                                item.getDescription() + " " +
+                                item.getVendor() + " " +
+                                item.getAmount()
+                );
+            }
+        }
+        System.out.println("[X] - Exit");
+        String input = scanner.nextLine();
+        if (input.equalsIgnoreCase("X")) {
+            ledgerMenu();
+        } else {
+            ledgerMenu();
+        }
     }
 
     public static void reportsMenu() {

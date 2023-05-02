@@ -5,12 +5,11 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Main {
+    public static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
-        homescreen();
+        homeScreen();
     }
-
-    public static void homescreen() {
-        Scanner scanner = new Scanner(System.in);
+    public static void homeScreen() {
         System.out.println("""
                 Welcome to your Finance Account!
                 Main Menu:
@@ -19,26 +18,16 @@ public class Main {
                 [L] - Ledger
                 [X] - Exit""");
         String input = scanner.nextLine();
-        switch(input.toUpperCase()){
-            case "D":
-                addDeposit();
-                break;
-            case "P":
-                makePayment();
-                break;
-            case "L":
-                showLedger();
-                break;
-            case "X":
-                System.exit(0);
-            default:
-                System.out.println("Please enter a valid option");
-                break;
+        switch (input.toUpperCase()) {
+            case "D" -> addDeposit();
+            case "P" -> makePayment();
+            case "L" -> showLedger();
+            case "X" -> System.exit(0);
+            default -> System.out.println("Please enter a valid option");
         }
     }
 
     public static void addDeposit() {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Enter Date: YYYY-MM-DD");
         String date = scanner.nextLine();
         System.out.println("Enter Time: HH:MM:SS");
@@ -64,12 +53,11 @@ public class Main {
         catch(IOException e){
             System.out.println("Error inputting data!");
         }
-        homescreen();
+        homeScreen();
     }
 
 
     public static void makePayment() {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Enter Date: YYYY-MM-DD");
         String date = scanner.nextLine();
         System.out.println("Enter Time: HH:MM:SS");
@@ -95,10 +83,10 @@ public class Main {
         catch(IOException e){
             System.out.println("Error inputting data!");
         }
-        homescreen();
+        homeScreen();
     }
 
     public static void showLedger() {
-        Ledger.showLedger();
+        Ledger.ledgerMenu();
     }
 }
