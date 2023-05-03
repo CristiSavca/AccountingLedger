@@ -23,7 +23,8 @@ public class Main {
             case "P" -> makePayment();
             case "L" -> Ledger.ledgerMenu();
             case "X" -> System.exit(0);
-            default -> System.out.println("Please enter a valid option");
+            default -> {System.out.println("Please enter a valid option");
+                        homeScreen();}
         }
     }
 
