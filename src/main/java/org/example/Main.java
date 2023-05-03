@@ -1,13 +1,15 @@
 package org.example;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.*;
+import java.time.temporal.ChronoUnit;
 import java.util.Scanner;
 
 public class Main {
     public static Scanner scanner = new Scanner(System.in);
-    public static void main(String[] args) {homeScreen();} // run home screen
+    public static void main(String[] args) { // run home screen
+        homeScreen();
+    }
 
     public static void homeScreen() { // print home menu choices
         System.out.println("""
@@ -19,16 +21,15 @@ public class Main {
                 [X] - Exit""");
         String input = scanner.nextLine();
         switch (input.toUpperCase()) { // run corresponding methods (screens) based on user input
-            case "D" -> addDeposit();
-            case "P" -> makePayment();
+            case "D" -> addEntry("Deposit");
+            case "P" -> addEntry("Payment");
             case "L" -> Ledger.ledgerMenu();
             case "X" -> System.exit(0);
-            default -> {System.out.println("Please enter a valid option");
-                        homeScreen();}
+            default -> System.out.println("Please enter a valid option");
         }
     }
 
-    public static void addDeposit() { // prompt user for details of transaction and store it in corresponding variables
+    public static void addEntry(String filter) { // prompt user for details of transaction and store it in corresponding variables
         System.out.println("Enter Description:");
         String description = scanner.nextLine();
         System.out.println("Enter Vendor:");
@@ -36,36 +37,18 @@ public class Main {
         System.out.println("Enter Deposit Amount:");
         double amount = scanner.nextDouble();
 
+        String amountSign = "";
+        if (filter.equals("Payment")) {amountSign = "-";}
+
         // write the variables' info to the csv file with appropriate format and use current date/time
         try (FileWriter fileWriter = new FileWriter("transactions.csv", true)) {
             fileWriter.write("\n" +
-                    LocalDate.now() + "|" + LocalTime.now() + "|" + description + "|" + vendor + "|" + amount
-            );
+                    LocalDate.now() + "|" + LocalTime.now().truncatedTo(ChronoUnit.SECONDS) + "|" + description + "|" + vendor + "|" + amountSign + amount);
             fileWriter.close();
-            System.out.println("Deposit added successfully!");
+            System.out.println(filter + " added successfully!");
         } catch (IOException e) { // throw error message when input is erroneous
             System.out.println("Error inputting data!");
         }
-        homeScreen(); // run the home screen menu again when finished adding deposit
-    }
-
-    public static void makePayment() { // Same as deposit method but add a "-" sign before the amount
-        System.out.println("Enter Description:");
-        String description = scanner.nextLine();
-        System.out.println("Enter Vendor:");
-        String vendor = scanner.nextLine();
-        System.out.println("Enter Transaction Amount:");
-        double amount = scanner.nextDouble();
-
-        try (FileWriter fileWriter = new FileWriter("transactions.csv", true)) {
-            fileWriter.write("\n" +
-                    LocalDate.now() + "|" + LocalTime.now() + "|" + description + "|" + vendor + "|-" + amount
-            );
-            fileWriter.close();
-            System.out.println("Payment made successfully!");
-        } catch (IOException e) {
-            System.out.println("Error inputting data!");
-        }
-        homeScreen();
+        homeScreen(); // run the home screen menu again when finished adding entry
     }
 }

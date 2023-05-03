@@ -55,9 +55,9 @@ public class Ledger {
         String filter = "";
         String input = scanner.nextLine();
         switch (input.toUpperCase()) {
-            case "A" -> {filter = "all"; showEntries(filter);}
-            case "D" -> {filter = "deposits"; showEntries(filter);}
-            case "P" -> {filter = "payments"; showEntries(filter);}
+            case "A" -> {filter = "Entries"; showEntries("Entries");}
+            case "D" -> {filter = "Deposits"; showEntries(filter);}
+            case "P" -> {filter = "Payments"; showEntries(filter);}
             case "R" -> reportsMenu();
             case "H" -> Main.homeScreen();
             default -> System.out.println("Please enter a valid option");
@@ -65,42 +65,13 @@ public class Ledger {
     }
 
     public static void showEntries(String filter) { // loop through transactions array and display all entries based on filter
-        System.out.println("All Entries:");
+        boolean filterStatus = true;
+        System.out.println("All " + filter + ":");
         for (Transaction item : transactions) {
-            System.out.println(
-                    item.getDate() + " " +
-                            item.getTime() + " " +
-                            item.getDescription() + " " +
-                            item.getVendor() + " $" +
-                            item.getAmount()
-            );
-        }
-        System.out.println("[X] - Exit");
-        String input = scanner.nextLine();
-        if (input.equalsIgnoreCase("X")) {ledgerMenu();}
-        else {ledgerMenu();}
-    }
+            if (filter.equals("Deposits")){filterStatus = item.getAmount() > 0;}
+            else if (filter.equals("Payments")){filterStatus = item.getAmount() < 0;}
 
-    public static void showDeposits() { // loop through transactions and only print entries with positive amounts
-        System.out.println("All Deposits:");
-        for (Transaction item : transactions) {
-            if (item.getAmount() > 0) {
-                System.out.println(
-                        item.getDate() + " " +
-                                item.getTime() + " " + item.getDescription() + " " + item.getVendor() + " $" + item.getAmount()
-                );
-            }
-        }
-        System.out.println("[X] - Exit");
-        String input = scanner.nextLine();
-        if (input.equalsIgnoreCase("X")) {ledgerMenu();}
-        else {ledgerMenu();}
-    }
-
-    public static void showPayments() { // loop through transactions but only print entries with negative amounts
-        System.out.println("All Payments:");
-        for (Transaction item : transactions) {
-            if (item.getAmount() < 0) {
+            if (filterStatus) {
                 System.out.println(
                         item.getDate() + " " +
                                 item.getTime() + " " +
@@ -143,7 +114,6 @@ public class Ledger {
         int[] itemDate = new int[2];
         int[] targetDate = new int[2];
         String itemVendor = "";
-
         System.out.println(filter + " Transactions:");
 
         for (Transaction item : transactions) {
