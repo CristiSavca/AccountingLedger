@@ -63,7 +63,7 @@ public class Ledger {
         }
     }
 
-    public static void showEntries() {
+    public static void showEntries() { // loop through transactions array and display all entries
         System.out.println("All Entries:");
         for (Transaction item : transactions) {
             System.out.println(
@@ -76,23 +76,17 @@ public class Ledger {
         }
         System.out.println("[X] - Exit");
         String input = scanner.nextLine();
-        if (input.equalsIgnoreCase("X")) {
-            ledgerMenu();
-        } else {
-            ledgerMenu();
-        }
+        if (input.equalsIgnoreCase("X")) {ledgerMenu();}
+        else {ledgerMenu();}
     }
 
-    public static void showDeposits() {
+    public static void showDeposits() { // loop through transactions and only print entries with positive amounts
         System.out.println("All Deposits:");
         for (Transaction item : transactions) {
             if (item.getAmount() > 0) {
                 System.out.println(
                         item.getDate() + " " +
-                                item.getTime() + " " +
-                                item.getDescription() + " " +
-                                item.getVendor() + " $" +
-                                item.getAmount()
+                                item.getTime() + " " + item.getDescription() + " " + item.getVendor() + " $" + item.getAmount()
                 );
             }
         }
@@ -102,7 +96,7 @@ public class Ledger {
         else {ledgerMenu();}
     }
 
-    public static void showPayments() {
+    public static void showPayments() { // loop through transactions but only print entries with negative amounts
         System.out.println("All Payments:");
         for (Transaction item : transactions) {
             if (item.getAmount() < 0) {
@@ -134,13 +128,13 @@ public class Ledger {
         String filter = "";
         String input = scanner.nextLine();
         switch (input.toUpperCase()) {
-            case "1" -> {date = LocalDate.now().withDayOfMonth(1);
+            case "1" -> {date = LocalDate.now();
                          filter = "Month To Date";}
-            case "2" -> {date = LocalDate.now().minusMonths(1).withDayOfMonth(1);
+            case "2" -> {date = LocalDate.now().minusMonths(1);
                          filter = "Previous Month";}
-            case "3" -> {date = LocalDate.now().withDayOfYear(1);
+            case "3" -> {date = LocalDate.now();
                          filter = "Year To Date";}
-            case "4" -> {date = LocalDate.now().minusYears(1).withDayOfYear(1);
+            case "4" -> {date = LocalDate.now().minusYears(1);
                          filter = "Previous Year";}
             case "5" -> {System.out.println("Enter Vendor Name:");
                          String vendor = scanner.nextLine();
