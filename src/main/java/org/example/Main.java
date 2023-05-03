@@ -8,12 +8,12 @@ import java.util.Scanner;
 public class Main {
     public static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) { // run home screen
+        System.out.println("Welcome To Your Finance Account!");
         homeScreen();
     }
 
     public static void homeScreen() { // print home menu choices
         System.out.println("""
-                Welcome to your Finance Account!
                 Main Menu:
                 [D] - Add Deposit
                 [P] - Make Payment
@@ -36,6 +36,7 @@ public class Main {
         String vendor = scanner.nextLine();
         System.out.println("Enter Deposit Amount:");
         double amount = scanner.nextDouble();
+        scanner.nextLine(); // clear scanner buffer
 
         String amountSign = "";
         if (filter.equals("Payment")) {amountSign = "-";}

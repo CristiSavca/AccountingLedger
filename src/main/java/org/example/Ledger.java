@@ -45,7 +45,6 @@ public class Ledger {
 
     public static void ledgerMenu() {
         System.out.println("""
-                Welcome to your Account Ledger!
                 Ledger Menu:
                 [A] - All Entries
                 [D] - Deposits
@@ -55,9 +54,9 @@ public class Ledger {
         String filter = "";
         String input = scanner.nextLine();
         switch (input.toUpperCase()) {
-            case "A" -> {filter = "Entries"; showEntries("Entries");}
-            case "D" -> {filter = "Deposits"; showEntries(filter);}
-            case "P" -> {filter = "Payments"; showEntries(filter);}
+            case "A" -> showEntries("Entries");
+            case "D" -> showEntries("Deposits");
+            case "P" -> showEntries("Payments");
             case "R" -> reportsMenu();
             case "H" -> Main.homeScreen();
             default -> System.out.println("Please enter a valid option");

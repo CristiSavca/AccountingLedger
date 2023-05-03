@@ -7,11 +7,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58e58f1b-3175-422f-9496-ba2af1c1df78" name="Changes" comment="collapsed reports loops into one single loop">
+    <list default="true" id="58e58f1b-3175-422f-9496-ba2af1c1df78" name="Changes" comment="combined show all entries, show deposits, and show payments loops into one single method">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Ledger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Ledger.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/transactions.csv" beforeDir="false" afterPath="$PROJECT_DIR$/transactions.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,7 +124,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683140186212</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="combined show all entries, show deposits, and show payments loops into one single method">
+      <created>1683146890327</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1683146890328</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -151,6 +157,7 @@
     <MESSAGE value="sorted transactions array, and implemented Ledger Reports Menu with search filters" />
     <MESSAGE value="updated csv file" />
     <MESSAGE value="collapsed reports loops into one single loop" />
-    <option name="LAST_COMMIT_MESSAGE" value="collapsed reports loops into one single loop" />
+    <MESSAGE value="combined show all entries, show deposits, and show payments loops into one single method" />
+    <option name="LAST_COMMIT_MESSAGE" value="combined show all entries, show deposits, and show payments loops into one single method" />
   </component>
 </project>
