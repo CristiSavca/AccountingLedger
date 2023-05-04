@@ -1,9 +1,11 @@
 package org.example;
 import java.io.FileReader;
 import java.io.BufferedReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Scanner;
@@ -44,22 +46,25 @@ public class Ledger {
     }
 
     public static void ledgerMenu() {
-        System.out.println("""
-                Ledger Menu:
-                [A] - All Entries
-                [D] - Deposits
-                [P] - Payments
-                [R] - Reports
-                [H] - Home""");
-        String filter = "";
-        String input = scanner.nextLine();
-        switch (input.toUpperCase()) {
-            case "A" -> showEntries("Entries");
-            case "D" -> showEntries("Deposits");
-            case "P" -> showEntries("Payments");
-            case "R" -> reportsMenu();
-            case "H" -> Main.homeScreen();
-            default -> System.out.println("Please enter a valid option");
+        boolean done = false;
+        while (!done) {
+            System.out.println("""
+                    Ledger Menu:
+                    [A] - All Entries
+                    [D] - Deposits
+                    [P] - Payments
+                    [R] - Reports
+                    [H] - Home""");
+            String filter = "";
+            String input = scanner.nextLine();
+            switch (input.toUpperCase()) {
+                case "A" -> showEntries("Entries");
+                case "D" -> showEntries("Deposits");
+                case "P" -> showEntries("Payments");
+                case "R" -> reportsMenu();
+                case "H" -> done = true;
+                default -> System.out.println("Please enter a valid option");
+            }
         }
     }
 
@@ -80,62 +85,143 @@ public class Ledger {
                 );
             }
         }
-        System.out.println("[X] - Exit");
-        String input = scanner.nextLine();
-        if (input.equalsIgnoreCase("X")) {ledgerMenu();}
-        else {ledgerMenu();}
+        boolean validOption = false;
+        while (!validOption) {
+            System.out.println("[X] - Back");
+            String input = scanner.nextLine();
+            if (input.equalsIgnoreCase("X")) {
+                validOption = true;
+            } else {
+                System.out.println("Please enter a valid option");
+            }
+        }
     }
 
     public static void reportsMenu() {
-        System.out.println("""
-                Reports Menu:
-                [1] - Month To Date
-                [2] - Previous Month
-                [3] - Year To Date
-                [4] - Previous Year
-                [5] - Search By Vendor
-                [0] - Back""");
-        LocalDate date = LocalDate.now(); String filter = ""; String vendor = "";
-        String input = scanner.nextLine();
-        switch (input.toUpperCase()) {
-            case "1" -> {date = LocalDate.now(); filter = "Month To Date";}
-            case "2" -> {date = LocalDate.now().minusMonths(1); filter = "Previous Month";}
-            case "3" -> {date = LocalDate.now(); filter = "Year To Date";}
-            case "4" -> {date = LocalDate.now().minusYears(1); filter = "Previous Year";}
-            case "5" -> {System.out.println("Enter Vendor Name:"); vendor = scanner.nextLine();}
-            case "0" -> ledgerMenu();
-            default -> {System.out.println("Please enter a valid option"); reportsMenu();}
+        boolean done = false;
+        while (!done) {
+            System.out.println("""
+                    Reports Menu:
+                    [1] - Month To Date
+                    [2] - Previous Month
+                    [3] - Year To Date
+                    [4] - Previous Year
+                    [5] - Search By Vendor
+                    [6] - Custom Search
+                    [0] - Back""");
+            LocalDate date = LocalDate.now();
+            String filter = "";
+            String vendor = "";
+            String input = scanner.nextLine();
+            switch (input.toUpperCase()) {
+                case "1" -> {
+                    date = LocalDate.now();
+                    filter = "Month To Date";
+                }
+                case "2" -> {
+                    date = LocalDate.now().minusMonths(1);
+                    filter = "Previous Month";
+                }
+                case "3" -> {
+                    date = LocalDate.now();
+                    filter = "Year To Date";
+                }
+                case "4" -> {
+                    date = LocalDate.now().minusYears(1);
+                    filter = "Previous Year";
+                }
+                case "5" -> {
+                    System.out.println("Enter Vendor Name:");
+                    vendor = scanner.nextLine();
+                }
+                case "6" -> customSearch();
+                case "0" -> done = true;
+                default -> {
+                    System.out.println("Please enter a valid option");
+                    reportsMenu();
+                }
+            }
+            reportsLoops(date, filter, vendor);
         }
-        reportsLoops(date, filter, vendor);
     }
 
     public static void reportsLoops(LocalDate filterDate, String filter, String vendor) {
-        int[] itemDate = new int[2];
-        int[] targetDate = new int[2];
-        String itemVendor = "";
-        System.out.println(filter + " Transactions:");
+            int[] itemDate = new int[2];
+            int[] targetDate = new int[2];
+            String itemVendor = "";
+            System.out.println(filter + " Transactions:");
 
-        for (Transaction item : transactions) {
-            if (filter.equals("Month To Date") || filter.equals("Previous Month")){
-                itemDate[0] = item.getDate().getMonthValue(); itemDate[1] = item.getDate().getYear();
-                targetDate[0] = filterDate.getMonthValue(); targetDate[1] = filterDate.getYear();}
-            else if (filter.equals("Year To Date") || filter.equals("Previous Year")){
-                itemDate[1] = item.getDate().getYear(); targetDate[1] = filterDate.getYear();}
-            else {itemVendor = item.getVendor();}
+            for (Transaction item : transactions) {
+                if (filter.equals("Month To Date") || filter.equals("Previous Month")) {
+                    itemDate[0] = item.getDate().getMonthValue();
+                    itemDate[1] = item.getDate().getYear();
+                    targetDate[0] = filterDate.getMonthValue();
+                    targetDate[1] = filterDate.getYear();
+                } else if (filter.equals("Year To Date") || filter.equals("Previous Year")) {
+                    itemDate[1] = item.getDate().getYear();
+                    targetDate[1] = filterDate.getYear();
+                } else {
+                    itemVendor = item.getVendor().toLowerCase();
+                }
 
-            if (itemDate[0] == targetDate[0] && itemDate[1] == targetDate[1] && itemVendor.equals(vendor)) {
-                System.out.println(
-                        item.getDate() + " " +
-                                item.getTime() + " " +
-                                item.getDescription() + " " +
-                                item.getVendor() + " $" +
-                                item.getAmount()
-                );
+                if (itemDate[0] == targetDate[0] && itemDate[1] == targetDate[1] && itemVendor.equals(vendor.toLowerCase())) {
+                    System.out.println(
+                            item.getDate() + " " +
+                                    item.getTime() + " " +
+                                    item.getDescription() + " " +
+                                    item.getVendor() + " $" +
+                                    item.getAmount()
+                    );
+                }
+            }
+            boolean validOption = false;
+            while (!validOption) {
+                System.out.println("[X] - Back");
+                String input = scanner.nextLine();
+                if (input.equalsIgnoreCase("X")) {
+                    validOption = true;
+                } else {
+                    System.out.println("Please enter a valid option");
+                }
             }
         }
-        System.out.println("[X] - Back");
+
+    public static void customSearch() {
+            System.out.println("Custom Search: (Press Enter To Skip Fields)");
+            System.out.println("Enter Start Date:");
+            LocalDate startDate = getDateFromCLI();
+            System.out.println("Enter End Date:");
+            LocalDate endDate = getDateFromCLI();
+            System.out.println("Enter Description:");
+            String description = scanner.nextLine().toLowerCase();
+            System.out.println("Enter Vendor:");
+            String vendor = scanner.nextLine().toLowerCase();
+            System.out.println("Enter Amount:");
+            String amountValid = scanner.nextLine();
+            double amount = amountValid.isEmpty() ? 0 : Double.parseDouble(amountValid);
+
+            for (Transaction item : transactions) {
+                boolean matchStartDate = startDate == null || !item.getDate().isBefore(startDate);
+                boolean matchEndDate = endDate == null || !item.getDate().isAfter(endDate);
+                boolean matchDescription = description.isEmpty() || item.getDescription().equalsIgnoreCase(description);
+                boolean matchVendor = vendor.isEmpty() || item.getVendor().equalsIgnoreCase(vendor);
+                boolean matchAmount = amount == 0 || item.getAmount() == amount;
+
+                if (matchStartDate && matchEndDate && matchDescription && matchVendor && matchAmount) {
+                    System.out.println(
+                            item.getDate() + " " +
+                                    item.getTime() + " " +
+                                    item.getDescription() + " " +
+                                    item.getVendor() + " $" +
+                                    item.getAmount());
+                } else {
+                    System.out.println("No Transactions Found!");
+                }
+            }
+        }
+
+    private static LocalDate getDateFromCLI() {
         String input = scanner.nextLine();
-        if (input.equalsIgnoreCase("X")) {reportsMenu();}
-        else {reportsMenu();}
+        return input.equals("") ? null : LocalDate.parse(input);
     }
 }
