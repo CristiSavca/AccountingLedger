@@ -1,4 +1,8 @@
 # Accounting Ledger Application
 
-This is a Java CLI application built for the capstone project of the "Learn to Code" program.
+This is a Java CLI application built for capstone project 1.
 With this application, you can track all financial transactions for a business or personal use.
+
+The application includes several screens, including the Home Screen which prompts the user with options to Add Deposit, Make Payment (Debit), display the Ledger screen, or Exit the application. The Ledger screen displays all entries with the newest entries first and allows the user to filter entries by All, Deposits, Payments, or Reports. The Reports screen offers pre-defined reports, including Month to Date, Previous Month, Year to Date, Previous Year, and Search by Vendor. If the user enters a value for a search field, the application filters on that field.
+
+Additionally, the project has a challenge option to add a custom search feature to the Reports screen where the user is prompted to enter search values for Start Date, End Date, Description, Vendor, and Amount. The application filters on the search fields entered by the user.
