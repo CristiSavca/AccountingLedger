@@ -11,4 +11,4 @@ With this application, you can track all financial transactions for a business o
 
 3) The Reports screen offers pre-defined reports, including Month to Date, Previous Month, Year to Date, Previous Year, and Search by Vendor. If the user enters a value for a search field, the application filters on that field.
 
-4) Additionally, the project has a challenge option to add a custom search feature to the Reports screen where the user is prompted to enter search values for Start Date, End Date, Description, Vendor, and Amount. The application filters on the search fields entered by the user.
+4) The Custom Search feature, a challenge option inside the Reports screen where the user is prompted to enter search values for Start Date, End Date, Description, Vendor, and Amount. The application filters on the search fields entered by the user.
