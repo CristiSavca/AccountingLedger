@@ -22,6 +22,6 @@ With this application, you can track all financial transactions for a business o
 
 <img width="171" alt="image" src="https://user-images.githubusercontent.com/58373811/236402784-ecb46ce0-ce16-4678-9010-132a9d372abe.png">
 
-<img width="703" alt="image" src="https://user-images.githubusercontent.com/58373811/236402970-1c074ff5-ffc4-467b-89ed-25e1eaa64e4b.png">
+<img width="643" alt="image" src="https://user-images.githubusercontent.com/58373811/236405312-49e11951-6635-4f9c-876a-6c294eea75bf.png">
 
 <img width="638" alt="image" src="https://user-images.githubusercontent.com/58373811/236403844-fadf3384-b05d-4578-afe3-a9ac3581622e.png">
