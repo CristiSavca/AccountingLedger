@@ -163,11 +163,11 @@ public class Ledger {
     }
 
     private static void printTransaction(Transaction item) { // print method to avoid redundant print calls
-        System.out.println(
-                        item.getDate() + " " +
-                        item.getTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + " " +
-                        item.getDescription() + " " +
-                        item.getVendor() + " $" +
+        System.out.printf("%-15s %-15s %-30s %-25s %15.2f\n",
+                        item.getDate(),
+                        item.getTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")),
+                        item.getDescription(),
+                        item.getVendor(),
                         item.getAmount()
         );
     }
