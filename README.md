@@ -3,7 +3,8 @@
 This is a Java CLI application built for capstone project 1.
 With this application, you can track all financial transactions for a business or personal use.
 
-### The application includes several screens:
+
+## The application includes several screens:
 The Home Screen which prompts the user with options to Add Deposit, Make Payments, display the Ledger screen, or Exit the application.
 
 The Ledger screen displays all entries with the newest entries first and allows the user to filter entries by All, Deposits, Payments, or Reports.
