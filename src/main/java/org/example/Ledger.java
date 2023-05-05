@@ -69,7 +69,7 @@ public class Ledger {
 
     public static void showEntries(String filter) { // This method loops through transactions ArrayList and displays transactions based on filter from above menu
         boolean filterType = true; // Show all transactions by default
-        System.out.println("All " + filter + ":");
+        System.out.printf("%50s %s%s\n\n", "All ", filter, ":");
         for (Transaction item : transactions) {
             if (filter.equals("Deposits")) {
                 filterType = item.getAmount() > 0;
@@ -81,6 +81,7 @@ public class Ledger {
                 printTransaction(item);
             }
         }
+        System.out.println();
     }
 
     public static void reportsMenu() { // This method displays menu of queries for different reports
@@ -119,7 +120,7 @@ public class Ledger {
         int[] itemDate = new int[2]; // initialized to 0 by default
         int[] targetDate = new int[2]; // 0 by default
         String itemVendor = ""; // blank by default
-        System.out.println(filter + vendor + " Transactions:");
+        System.out.printf("%50s%s %s\n\n", filter, vendor, "Transactions:");
 
         for (Transaction item : transactions) {
             if (filter.equals("Month To Date") || filter.equals("Previous Month")) {
@@ -133,6 +134,7 @@ public class Ledger {
                 printTransaction(item);
             }
         }
+        System.out.println();
     }
 
     public static void customSearch() { // This method allows the user to perform a custom search based on various fields
@@ -160,6 +162,7 @@ public class Ledger {
                 printTransaction(item);
             }
         }
+        System.out.println();
     }
 
     private static void printTransaction(Transaction item) { // print method to avoid redundant print calls
