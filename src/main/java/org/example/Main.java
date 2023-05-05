@@ -48,10 +48,9 @@ public class Main {
             }
             // write the variables' info to the csv file with appropriate format and use current date/time
             try (FileWriter fileWriter = new FileWriter("transactions.csv", true)) {
-                PrintWriter printWriter = new PrintWriter(fileWriter);
-                printWriter.printf("\n%s|%s|%s|%s|%s%.2f",
-                        LocalDate.now(), LocalTime.now().truncatedTo(ChronoUnit.SECONDS), description, vendor, amountSign, amount);
-                printWriter.close();
+                fileWriter.write(String.format("\n%s|%s|%s|%s|%s%.2f",
+                        LocalDate.now(), LocalTime.now().truncatedTo(ChronoUnit.SECONDS), description, vendor, amountSign, amount));
+                fileWriter.close();
                 System.out.println(filter + " added successfully!");
             } catch (IOException e) { // throw error message when input is erroneous
                 System.out.println("Error inputting data!");
