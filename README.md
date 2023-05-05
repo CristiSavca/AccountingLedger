@@ -27,7 +27,7 @@ With this application, you can track all financial transactions for a business o
 <img width="638" alt="image" src="https://user-images.githubusercontent.com/58373811/236403844-fadf3384-b05d-4578-afe3-a9ac3581622e.png">
 
 
-# Interesting Code:
+# Interesting Piece of Code:
 ```
 public static void reportsLoops(LocalDate filterDate, String filter, String vendor) { // one loop for all 6 menu options
         int[] itemDate = new int[2]; // initialized to 0 by default
