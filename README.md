@@ -25,3 +25,32 @@ With this application, you can track all financial transactions for a business o
 <img width="643" alt="image" src="https://user-images.githubusercontent.com/58373811/236405312-49e11951-6635-4f9c-876a-6c294eea75bf.png">
 
 <img width="638" alt="image" src="https://user-images.githubusercontent.com/58373811/236403844-fadf3384-b05d-4578-afe3-a9ac3581622e.png">
+
+
+# Interesting Code:
+```
+public static void reportsLoops(LocalDate filterDate, String filter, String vendor) { // one loop for all 6 menu options
+        int[] itemDate = new int[2]; // initialized to 0 by default
+        int[] targetDate = new int[2]; // 0 by default
+        String itemVendor = ""; // blank by default
+        if (!vendor.equals("")){filter = vendor;}
+        System.out.printf("%50s %s\n\n", filter, "Transactions:");
+
+        for (Transaction item : transactions) {
+            if (filter.equals("Month To Date") || filter.equals("Previous Month")) {
+                itemDate[0] = item.getDate().getMonthValue(); itemDate[1] = item.getDate().getYear(); // set current item's values-to-be-compared variable to current month and year
+                targetDate[0] = filterDate.getMonthValue(); targetDate[1] = filterDate.getYear();} // set the target date's values-to-be-compared variable to current month and year
+            else if (filter.equals("Year To Date") || filter.equals("Previous Year")) {
+                itemDate[1] = item.getDate().getYear(); targetDate[1] = filterDate.getYear();} // set only the year to be compared, and leave month value as 0. Same for target date
+            else {itemVendor = item.getVendor().toLowerCase();} // else leave months and years as 0 for both item and target dates, so they can match, and only compare by vendor
+
+            if (itemDate[0] == targetDate[0] && itemDate[1] == targetDate[1] && itemVendor.equals(vendor.toLowerCase())) {
+                printTransaction(item);
+            }
+        }
+        System.out.println();
+    }
+```
+
+The code above is interesting because it handles all 5 report queries: Month To Date, Prev Month, Year To Date, Prev Year,
+and Search By Vendor. It does this by using parameters passed in from the user's choice in the Reports Menu to set the values of the variables that will be compared in the for-loop. The values that are to be compared from the current item in the loop and the values that are to be compared from the target date or vendor are set based on the conditionals of the filter we passed in as a parameter, and in this way, we only print out the matching entries for the fields that we need, while "ignoring" the other fields.
