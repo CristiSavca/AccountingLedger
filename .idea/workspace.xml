@@ -7,7 +7,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58e58f1b-3175-422f-9496-ba2af1c1df78" name="Changes" comment="fixed scanner buffer error in main menu">
+    <list default="true" id="58e58f1b-3175-422f-9496-ba2af1c1df78" name="Changes" comment="finished custom search (extra credit)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Ledger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Ledger.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
@@ -139,7 +139,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683148366020</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="finished custom search (extra credit)">
+      <created>1683229326007</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1683229326007</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -167,6 +174,7 @@
     <MESSAGE value="collapsed reports loops into one single loop" />
     <MESSAGE value="combined show all entries, show deposits, and show payments loops into one single method" />
     <MESSAGE value="fixed scanner buffer error in main menu" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed scanner buffer error in main menu" />
+    <MESSAGE value="finished custom search (extra credit)" />
+    <option name="LAST_COMMIT_MESSAGE" value="finished custom search (extra credit)" />
   </component>
 </project>

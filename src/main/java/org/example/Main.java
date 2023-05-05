@@ -45,7 +45,6 @@ public class Main {
             if (filter.equals("Payment")) {
                 amountSign = "-";
             }
-
             // write the variables' info to the csv file with appropriate format and use current date/time
             try (FileWriter fileWriter = new FileWriter("transactions.csv", true)) {
                 fileWriter.write("\n" +

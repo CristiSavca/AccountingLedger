@@ -1,11 +1,10 @@
 package org.example;
 import java.io.FileReader;
 import java.io.BufferedReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Scanner;
@@ -34,7 +33,7 @@ public class Ledger {
                 transactions.add(transaction);
             }
         } catch (IOException e) {
-            System.out.println("File not found!");
+            System.out.println("File Not Found!");
             System.exit(0);
         }
         // Sort our transactions ArrayList in ascending order before returning it
@@ -55,7 +54,6 @@ public class Ledger {
                     [P] - Payments
                     [R] - Reports
                     [H] - Home""");
-            String filter = "";
             String input = scanner.nextLine();
             switch (input.toUpperCase()) {
                 case "A" -> showEntries("Entries");
@@ -72,27 +70,14 @@ public class Ledger {
         boolean filterStatus = true;
         System.out.println("All " + filter + ":");
         for (Transaction item : transactions) {
-            if (filter.equals("Deposits")){filterStatus = item.getAmount() > 0;}
-            else if (filter.equals("Payments")){filterStatus = item.getAmount() < 0;}
+            if (filter.equals("Deposits")) {
+                filterStatus = item.getAmount() > 0;
+            } else if (filter.equals("Payments")) {
+                filterStatus = item.getAmount() < 0;
+            }
 
             if (filterStatus) {
-                System.out.println(
-                        item.getDate() + " " +
-                                item.getTime() + " " +
-                                item.getDescription() + " " +
-                                item.getVendor() + " $" +
-                                item.getAmount()
-                );
-            }
-        }
-        boolean validOption = false;
-        while (!validOption) {
-            System.out.println("[X] - Back");
-            String input = scanner.nextLine();
-            if (input.equalsIgnoreCase("X")) {
-                validOption = true;
-            } else {
-                System.out.println("Please enter a valid option");
+                printTransaction(item);
             }
         }
     }
@@ -110,115 +95,77 @@ public class Ledger {
                     [6] - Custom Search
                     [0] - Back""");
             LocalDate date = LocalDate.now();
-            String filter = "";
             String vendor = "";
             String input = scanner.nextLine();
             switch (input.toUpperCase()) {
-                case "1" -> {
-                    date = LocalDate.now();
-                    filter = "Month To Date";
-                }
-                case "2" -> {
-                    date = LocalDate.now().minusMonths(1);
-                    filter = "Previous Month";
-                }
-                case "3" -> {
-                    date = LocalDate.now();
-                    filter = "Year To Date";
-                }
-                case "4" -> {
-                    date = LocalDate.now().minusYears(1);
-                    filter = "Previous Year";
-                }
-                case "5" -> {
-                    System.out.println("Enter Vendor Name:");
-                    vendor = scanner.nextLine();
-                }
+                case "1" -> reportsLoops(date, "Month To Date", vendor);
+                case "2" -> reportsLoops(date.minusMonths(1), "Previous Month", vendor);
+                case "3" -> reportsLoops(date, "Year To Date", vendor);
+                case "4" -> reportsLoops(date.minusYears(1), "Previous Year", vendor);
+                case "5" -> {System.out.println("Enter Vendor Name:"); vendor = scanner.nextLine(); reportsLoops(date,"", vendor);}
                 case "6" -> customSearch();
                 case "0" -> done = true;
-                default -> {
-                    System.out.println("Please enter a valid option");
-                    reportsMenu();
-                }
+                default -> System.out.println("Please enter a valid option");
             }
-            reportsLoops(date, filter, vendor);
         }
     }
 
     public static void reportsLoops(LocalDate filterDate, String filter, String vendor) {
-            int[] itemDate = new int[2];
-            int[] targetDate = new int[2];
-            String itemVendor = "";
-            System.out.println(filter + " Transactions:");
+        int[] itemDate = new int[2];
+        int[] targetDate = new int[2];
+        String itemVendor = "";
+        System.out.println(filter + vendor.toUpperCase() + " Transactions:");
 
-            for (Transaction item : transactions) {
-                if (filter.equals("Month To Date") || filter.equals("Previous Month")) {
-                    itemDate[0] = item.getDate().getMonthValue();
-                    itemDate[1] = item.getDate().getYear();
-                    targetDate[0] = filterDate.getMonthValue();
-                    targetDate[1] = filterDate.getYear();
-                } else if (filter.equals("Year To Date") || filter.equals("Previous Year")) {
-                    itemDate[1] = item.getDate().getYear();
-                    targetDate[1] = filterDate.getYear();
-                } else {
-                    itemVendor = item.getVendor().toLowerCase();
-                }
+        for (Transaction item : transactions) {
+            if (filter.equals("Month To Date") || filter.equals("Previous Month")) {
+                itemDate[0] = item.getDate().getMonthValue(); itemDate[1] = item.getDate().getYear();
+                targetDate[0] = filterDate.getMonthValue(); targetDate[1] = filterDate.getYear();}
+            else if (filter.equals("Year To Date") || filter.equals("Previous Year")) {
+                itemDate[1] = item.getDate().getYear(); targetDate[1] = filterDate.getYear();}
+            else {itemVendor = item.getVendor().toLowerCase();}
 
-                if (itemDate[0] == targetDate[0] && itemDate[1] == targetDate[1] && itemVendor.equals(vendor.toLowerCase())) {
-                    System.out.println(
-                            item.getDate() + " " +
-                                    item.getTime() + " " +
-                                    item.getDescription() + " " +
-                                    item.getVendor() + " $" +
-                                    item.getAmount()
-                    );
-                }
-            }
-            boolean validOption = false;
-            while (!validOption) {
-                System.out.println("[X] - Back");
-                String input = scanner.nextLine();
-                if (input.equalsIgnoreCase("X")) {
-                    validOption = true;
-                } else {
-                    System.out.println("Please enter a valid option");
-                }
+            if (itemDate[0] == targetDate[0] && itemDate[1] == targetDate[1] && itemVendor.equals(vendor.toLowerCase())) {
+                printTransaction(item);
             }
         }
+    }
 
     public static void customSearch() {
-            System.out.println("Custom Search: (Press Enter To Skip Fields)");
-            System.out.println("Enter Start Date:");
-            LocalDate startDate = getDateFromCLI();
-            System.out.println("Enter End Date:");
-            LocalDate endDate = getDateFromCLI();
-            System.out.println("Enter Description:");
-            String description = scanner.nextLine().toLowerCase();
-            System.out.println("Enter Vendor:");
-            String vendor = scanner.nextLine().toLowerCase();
-            System.out.println("Enter Amount:");
-            String amountValid = scanner.nextLine();
-            double amount = amountValid.isEmpty() ? 0 : Double.parseDouble(amountValid);
+        System.out.println("Custom Search: (Press Enter To Skip Field)");
+        System.out.println("Enter Start Date:");
+        LocalDate startDate = getDateFromCLI();
+        System.out.println("Enter End Date:");
+        LocalDate endDate = getDateFromCLI();
+        System.out.println("Enter Description:");
+        String description = scanner.nextLine().toLowerCase();
+        System.out.println("Enter Vendor:");
+        String vendor = scanner.nextLine().toLowerCase();
+        System.out.println("Enter Amount:");
+        String amountValid = scanner.nextLine();
+        double amount = amountValid.isEmpty() ? 0 : Double.parseDouble(amountValid);
 
-            for (Transaction item : transactions) {
-                boolean matchStartDate = startDate == null || !item.getDate().isBefore(startDate);
-                boolean matchEndDate = endDate == null || !item.getDate().isAfter(endDate);
-                boolean matchDescription = description.isEmpty() || item.getDescription().equalsIgnoreCase(description);
-                boolean matchVendor = vendor.isEmpty() || item.getVendor().equalsIgnoreCase(vendor);
-                boolean matchAmount = amount == 0 || item.getAmount() == amount;
+        for (Transaction item : transactions) {
+            boolean matchStartDate = startDate == null || !item.getDate().isBefore(startDate);
+            boolean matchEndDate = endDate == null || !item.getDate().isAfter(endDate);
+            boolean matchDescription = description.isEmpty() || item.getDescription().equalsIgnoreCase(description);
+            boolean matchVendor = vendor.isEmpty() || item.getVendor().equalsIgnoreCase(vendor);
+            boolean matchAmount = amount == 0 || item.getAmount() == amount;
 
-                if (matchStartDate && matchEndDate && matchDescription && matchVendor && matchAmount) {
-                    System.out.println(
-                            item.getDate() + " " +
-                                    item.getTime() + " " +
-                                    item.getDescription() + " " +
-                                    item.getVendor() + " $" +
-                                    item.getAmount());
-                } else {
-                    System.out.println("No Transactions Found!");
-                }
+            if (matchStartDate && matchEndDate && matchDescription && matchVendor && matchAmount) {
+                printTransaction(item);
             }
         }
+    }
+
+    private static void printTransaction(Transaction item) {
+        System.out.println(
+                        item.getDate() + " " +
+                        item.getTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")) + " " +
+                        item.getDescription() + " " +
+                        item.getVendor() + " $" +
+                        item.getAmount()
+        );
+    }
 
     private static LocalDate getDateFromCLI() {
         String input = scanner.nextLine();
