@@ -32,7 +32,7 @@ public class Main {
         }
     }
 
-    public static void addEntry(String filter) { // prompt user for details of transaction and store it in corresponding variables
+    public static void addEntry(String filter) { // Add deposit or payment based on filter parameter
             System.out.println("Enter Description:");
             String description = scanner.nextLine();
             System.out.println("Enter Vendor:");
@@ -41,8 +41,8 @@ public class Main {
             double amount = scanner.nextDouble();
             scanner.nextLine(); // clear scanner buffer
 
-            String amountSign = "";
-            if (filter.equals("Payment")) {
+            String amountSign = ""; // blank by default
+            if (filter.equals("Payment")) { // if filter is "Payment", make the amount negative
                 amountSign = "-";
             }
             // write the variables' info to the csv file with appropriate format and use current date/time
