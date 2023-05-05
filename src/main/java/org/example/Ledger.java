@@ -172,7 +172,7 @@ public class Ledger {
         );
     }
 
-    private static LocalDate getDateFromCLI() { // if no date inputted, set LocalDate variable to null, else: store date
+    private static LocalDate getDateFromCLI() { // if no date inputted set LocalDate variable to null, else: store date
         String input = scanner.nextLine();
         return input.equals("") ? null : LocalDate.parse(input);
     }
