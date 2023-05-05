@@ -116,11 +116,12 @@ public class Ledger {
         }
     }
 
-    public static void reportsLoops(LocalDate filterDate, String filter, String vendor) { // one loop for all 6 menu options
+    public static void reportsLoops(LocalDate filterDate, String filter, String vendor) { // one loop for all 5 report options
         int[] itemDate = new int[2]; // initialized to 0 by default
         int[] targetDate = new int[2]; // 0 by default
         String itemVendor = ""; // blank by default
-        System.out.printf("%50s%s %s\n\n", filter, vendor, "Transactions:");
+        if (!vendor.equals("")){filter = vendor;}
+        System.out.printf("%50s %s\n\n", filter, "Transactions:");
 
         for (Transaction item : transactions) {
             if (filter.equals("Month To Date") || filter.equals("Previous Month")) {
@@ -151,6 +152,7 @@ public class Ledger {
         String amountValid = scanner.nextLine();
         double amount = amountValid.isEmpty() ? 0 : Double.parseDouble(amountValid); // if no amount inputted, set to 0, else set to amount entered
 
+        System.out.printf("%65s\n\n", "Custom Search Transactions:");
         for (Transaction item : transactions) { // Check if the Transaction object matches the user's search criteria
             boolean matchStartDate = startDate == null || !item.getDate().isBefore(startDate); // if field is null, set corresponding boolean variable to true
             boolean matchEndDate = endDate == null || !item.getDate().isAfter(endDate); // if null/empty condition is true, field gets ignored.
