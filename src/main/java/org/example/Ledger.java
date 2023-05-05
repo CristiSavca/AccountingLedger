@@ -69,7 +69,7 @@ public class Ledger {
 
     public static void showEntries(String filter) { // This method loops through transactions ArrayList and displays transactions based on filter from above menu
         boolean filterType = true; // Show all transactions by default
-        System.out.printf("%50s %s%s\n\n", "All ", filter, ":");
+        System.out.printf("%50s %s\n\n", "All ", filter); printTitles();
         for (Transaction item : transactions) {
             if (filter.equals("Deposits")) {
                 filterType = item.getAmount() > 0;
@@ -121,7 +121,7 @@ public class Ledger {
         int[] targetDate = new int[2]; // 0 by default
         String itemVendor = ""; // blank by default
         if (!vendor.equals("")){filter = vendor;}
-        System.out.printf("%50s %s\n\n", filter, "Transactions:");
+        System.out.printf("%50s %s\n\n", filter, "Transactions"); printTitles();
 
         for (Transaction item : transactions) {
             if (filter.equals("Month To Date") || filter.equals("Previous Month")) {
@@ -152,7 +152,7 @@ public class Ledger {
         String amountValid = scanner.nextLine();
         double amount = amountValid.isEmpty() ? 0 : Double.parseDouble(amountValid); // if no amount inputted, set to 0, else set to amount entered
 
-        System.out.printf("%65s\n\n", "Custom Search Transactions:");
+        System.out.printf("%65s\n\n", "Custom Search Transactions"); printTitles();
         for (Transaction item : transactions) { // Check if the Transaction object matches the user's search criteria
             boolean matchStartDate = startDate == null || !item.getDate().isBefore(startDate); // if field is null, set corresponding boolean variable to true
             boolean matchEndDate = endDate == null || !item.getDate().isAfter(endDate); // if null/empty condition is true, field gets ignored.
@@ -165,6 +165,16 @@ public class Ledger {
             }
         }
         System.out.println();
+    }
+
+    public static void printTitles() {
+        System.out.printf("%-15s %-15s %-30s %-25s %15s\n\n",
+                "Date:",
+                "Time:",
+                "Description:",
+                "Vendor:",
+                "Amount:"
+        );
     }
 
     private static void printTransaction(Transaction item) { // print method to avoid redundant print calls
