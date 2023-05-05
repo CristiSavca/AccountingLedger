@@ -119,7 +119,7 @@ public class Ledger {
         int[] itemDate = new int[2]; // initialized to 0 by default
         int[] targetDate = new int[2]; // 0 by default
         String itemVendor = ""; // blank by default
-        System.out.println(filter + vendor.toUpperCase() + " Transactions:");
+        System.out.println(filter + vendor + " Transactions:");
 
         for (Transaction item : transactions) {
             if (filter.equals("Month To Date") || filter.equals("Previous Month")) {
