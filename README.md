@@ -14,7 +14,7 @@ With this application, you can track all financial transactions for a business o
 4) The Custom Search feature, a challenge option inside the Reports screen where the user is prompted to enter search values for Start Date, End Date, Description, Vendor, and Amount. The application filters on the search fields entered by the user.
 
 
-# Screenshots of Screens:
+# Screenshots of some Screens:
 
 <img width="211" alt="image" src="https://user-images.githubusercontent.com/58373811/236402586-ebca72c1-9e9c-4ed4-a5da-ef29b1c1b70c.png">
 
@@ -27,7 +27,7 @@ With this application, you can track all financial transactions for a business o
 <img width="638" alt="image" src="https://user-images.githubusercontent.com/58373811/236403844-fadf3384-b05d-4578-afe3-a9ac3581622e.png">
 
 
-# Interesting Code:
+# Interesting Piece of Code:
 ```
 public static void reportsLoops(LocalDate filterDate, String filter, String vendor) { // one loop for all 6 menu options
         int[] itemDate = new int[2]; // initialized to 0 by default
